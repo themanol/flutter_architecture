@@ -5,13 +5,14 @@ import 'package:meta/meta.dart';
 class Beer {
   final int id;
   final String name;
+  final num alcoholContent;
   final String tagLine;
   final String firstBrewed;
   final String description;
   final String imageUrl;
   final List<String> foodPairing;
 
-  Beer(this.id, this.name, this.tagLine, this.firstBrewed, this.description,
+  Beer(this.id, this.name,this.alcoholContent, this.tagLine, this.firstBrewed, this.description,
       this.imageUrl, this.foodPairing);
 
   @override
@@ -34,6 +35,7 @@ class Beer {
     return new BeerEntity(
         id,
         name,
+        alcoholContent,
         tagLine,
         firstBrewed,
         description,
@@ -45,6 +47,7 @@ class Beer {
     return new Beer(
         entity.id,
         entity.name,
+        entity.alcoholContent,
         entity.tagLine,
         entity.firstBrewed,
         entity.description,

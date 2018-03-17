@@ -18,6 +18,5 @@ class BeersPageLoadedAction{
     return 'BeersPageLoaded{page: $page, beers: $beers}';
   }
 
-
 }
 

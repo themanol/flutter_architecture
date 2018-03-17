@@ -8,5 +8,7 @@ final beersReducer = combineTypedReducers<List<Beer>>([
 ]);
 
 List<Beer> _setLoadedBeersPage(List<Beer> state, BeersPageLoadedAction action) {
-  return action.beers;
+  List<Beer> newState = new List.from(state);
+  newState.addAll(action.beers);
+  return newState;
 }

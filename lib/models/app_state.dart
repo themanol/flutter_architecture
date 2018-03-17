@@ -5,11 +5,11 @@ import 'package:meta/meta.dart';
 class AppState {
   final bool isLoading;
   final List<Beer> beers;
-  final int currentPage;
+  final num currentPage;
 
   AppState({this.isLoading = false,
     this.beers = const [],
-    this.currentPage = 1
+    this.currentPage = 0
   });
 
   factory AppState.loading() => new AppState(isLoading: true);

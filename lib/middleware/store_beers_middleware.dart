@@ -6,6 +6,8 @@ import 'package:flutter_mvp/models/beer.dart';
 import 'package:flutter_mvp/selectors/selectors.dart';
 import 'package:redux/redux.dart';
 
+const PER_PAGE = 25;
+
 List<Middleware<AppState>> createStoreBeersMiddleware([
   BeerRepository repository = const BeerRepositoryImpl()
 ]) {
@@ -19,7 +21,7 @@ List<Middleware<AppState>> createStoreBeersMiddleware([
 
 Middleware<AppState> _createLoadBeers(BeerRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    repository.getBeers(currentPageSelector(store.state) + 1).then(
+    repository.getBeers(currentPageSelector(store.state) + 1, PER_PAGE).then(
           (beers) {
         store.dispatch(
             new BeersPageLoadedAction(

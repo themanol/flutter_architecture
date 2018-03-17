@@ -4,12 +4,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_mvp/data/beers_data.dart';
+import 'package:flutter_mvp/data/search_parameters.dart';
 import 'package:http/http.dart' as http;
 
 
 class BeerRepositoryImpl implements BeerRepository {
 
-  static const _BeersApi = 'https://api.punkapi.com/v2/beers/';
+  static const _BeersApi = 'http://api.punkapi.com/v2/beers/';
   static final JsonDecoder _decoder = new JsonDecoder();
   static final Map<int, BeerEntity> _cache = new Map();
 
@@ -17,9 +18,10 @@ class BeerRepositoryImpl implements BeerRepository {
   const BeerRepositoryImpl();
 
   @override
-  Future<List<BeerEntity>> getBeers(int page) {
+  Future<List<BeerEntity>> getBeers(int page, int perPage) {
     var client = new http.Client();
-    return client.get(_BeersApi + "?page=$page").then((http.Response response) {
+    return client.get(_BeersApi + "?page=$page&per_page=$perPage").then((
+        http.Response response) {
       if (response.statusCode == HttpStatus.OK) {
         return _parseBeersJson(response.body);
       }
@@ -54,4 +56,23 @@ class BeerRepositoryImpl implements BeerRepository {
     _cache[beer.id] = beer;
   }
 
+  @override
+  Future<List<BeerEntity>> searchBeers(
+      Map<SearchParameters, String> searchQuery, int page, int perPage) {
+    var client = new http.Client();
+    return client.get(
+        _BeersApi + "?page=$page&per_page=$perPage${_createQuery(searchQuery)}")
+        .then((http.Response response) {
+      if (response.statusCode == HttpStatus.OK) {
+        return _parseBeersJson(response.body);
+      }
+    }).whenComplete(client.close);
+  }
+
+}
+
+String _createQuery(Map<SearchParameters, String> searchQuery) {
+  String query = "";
+  searchQuery.forEach((key, value) => query += "&$key=$value");
+  return query;
 }

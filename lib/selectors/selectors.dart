@@ -5,4 +5,8 @@ bool isLoadingSelector(AppState state) => state.isLoading;
 
 List<Beer> beersSelector(AppState state) => state.beers;
 
-int currentPageSelector(AppState state) => state.currentPage;
+Beer beerSelector(List<Beer> beers, int id) {
+  return beers.firstWhere((beer) => beer.id == id);
+}
+
+num currentPageSelector(AppState state) => state.currentPage;

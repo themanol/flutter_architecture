@@ -18,6 +18,7 @@ class BeersBrowser extends StatelessWidget {
       builder: (context, vm) {
         return new BeerList(
           beers: vm.beers,
+          onEndScroll: vm.onEndScroll,
         );
       },
     );
@@ -33,7 +34,7 @@ class _ViewModel {
   _ViewModel({
     @required this.beers,
     @required this.loading,
-    @required this.onEndScroll
+    @required this.onEndScroll,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
